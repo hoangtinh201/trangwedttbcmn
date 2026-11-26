@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ban Truyền Thông - Hệ Thống Quản Lý</title>
+    <meta name="description" content="Hệ thống quản lý nội bộ Ban Truyền Thông">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loader"></div>
+        <div class="loading-text">Đang tải...</div>
+    </div>
+
+    <!-- Login Screen -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-box">
+            <div class="login-logo">
+                <img src="assets/logo.svg" alt="Logo" id="loginLogo">
+                <h2 id="siteName">Ban Truyền Thông</h2>
+                <p id="siteDescription">Hệ thống quản lý nội bộ</p>
+            </div>
+            
+            
+            
+            <!-- Login Form -->
+            <div id="loginFormContainer">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>Tên đăng nhập</label>
+                        <input type="text" id="username" required placeholder="Nhập tên đăng nhập" autocomplete="username">
+                    </div>
+                    <div class="form-group">
+                        <label>Mật khẩu</label>
+                        <input type="password" id="password" required placeholder="Nhập mật khẩu" autocomplete="current-password">
+                    </div>
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 400;">
+                            <input type="checkbox" id="rememberMe" style="width: auto;">
+                            <span>Ghi nhớ đăng nhập</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-login">Đăng nhập</button>
+                </form>
+                <div class="forgot-password">
+                    <a href="#" onclick="showForgotPassword(event)">Quên mật khẩu?</a>
+                </div>
+            </div>
+
+            <!-- Forgot Password Form -->
+            <div id="forgotPasswordContainer" style="display: none;">
+                <div id="resetSuccessMessage" class="message"></div>
+                <div id="resetErrorMessage" class="message"></div>
+                <form id="forgotPasswordForm">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="resetEmail" required placeholder="Nhập email của bạn">
+                    </div>
+                    <button type="submit" class="btn-login">Gửi mã xác thực</button>
+                </form>
+                <div class="forgot-password">
+                    <a href="#" onclick="showLogin(event)">Quay lại đăng nhập</a>
+                </div>
+            </div>
+
+            <!-- Verify Code Form -->
+            <div id="verifyCodeContainer" style="display: none;">
+                <div id="verifySuccessMessage" class="message"></div>
+                <div id="verifyErrorMessage" class="message"></div>
+                <form id="verifyCodeForm">
+                    <div class="form-group">
+                        <label>Mã xác thực</label>
+                        <input type="text" id="verifyCode" required placeholder="Nhập mã 6 số" maxlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label>Mật khẩu mới</label>
+                        <input type="password" id="newPassword" required placeholder="Nhập mật khẩu mới" minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label>Xác nhận mật khẩu</label>
+                        <input type="password" id="confirmNewPassword" required placeholder="Nhập lại mật khẩu mới">
+                    </div>
+                    <button type="submit" class="btn-login">Đặt lại mật khẩu</button>
+                </form>
+                <div class="forgot-password">
+                    <a href="#" onclick="showLogin(event)">Quay lại đăng nhập</a>
+                </div>
+            </div>
+
+            <p style="margin-top: 20px; text-align: center; color: var(--text-gray); font-size: 12px;">
+                Demo: admin / admin123
+            </p>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container" id="mainApp">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/logo.svg" alt="Logo" class="sidebar-logo" id="sidebarLogo">
+                <div class="sidebar-title">
+                    <h1 id="sidebarTitle">Ban Truyền Thông</h1>
+                    <p id="sidebarSubtitle">Hệ thống quản lý</p>
+                </div>
+            </div>
+
+            <div class="sidebar-nav" id="sidebarNav">
+                <button class="nav-item" data-tab="dashboard" onclick="switchTab('dashboard')"><i>▦</i><span>Tổng quan</span></button>
+<button class="nav-item" data-tab="work" onclick="switchTab('work')"><i>☑</i><span>Công việc</span></button>
+<button class="nav-item" data-tab="members" onclick="switchTab('members')"><i>♧</i><span>Thành viên</span></button>
+<button class="nav-item" data-tab="content" onclick="switchTab('content')"><i>✎</i><span>Nội dung</span></button>
+<button class="nav-item" data-tab="media" onclick="switchTab('media')"><i>▧</i><span>Tư liệu</span></button>
+<button class="nav-item" data-tab="users" onclick="switchTab('users')"><i>♙</i><span>Tài khoản</span></button>
+<button class="nav-item" data-tab="audit" onclick="switchTab('audit')"><i>◷</i><span>Lịch sử</span></button>
+<button class="nav-item" data-tab="settings" onclick="switchTab('settings')"><i>⚙</i><span>Cài đặt</span></button>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="user-profile" onclick="openProfileModal()">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23fbbf24'/%3E%3Ctext x='50' y='65' font-size='40' fill='white' text-anchor='middle' font-family='Arial'%3EA%3C/text%3E%3C/svg%3E" alt="Avatar" class="user-avatar" id="userAvatar">
+                    <div class="user-info">
+                        <h4 id="currentUserName">Admin</h4>
+                        <p id="currentUserRole">Trưởng Ban</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="top-bar-left">
+                    <div class="menu-toggle" onclick="toggleSidebar()">☰</div>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Tìm kiếm..." id="globalSearch" onkeyup="handleGlobalSearch()">
+                        <i class="icon">🔍</i>
+                    </div>
+                </div>
+                <div class="top-bar-right">
+                    <button class="theme-toggle" onclick="toggleTheme()" title="Chuyển đổi chủ đề">
+                        <span id="themeIcon">🌙</span>
+                    </button>
+                    <button class="notification-btn" onclick="openNotifications()">
+                        <span>🔔</span>
+                        <span class="notification-badge" id="notificationCount" style="display: none;">0</span>
+                    </button>
+                    <button class="btn-logout" onclick="logout()">Đăng xuất</button>
+                </div>
+            </div>
+
+            <!-- Content Wrapper -->
+            <div class="content-wrapper" id="contentWrapper">
+                <!-- Dashboard Tab -->
+                <div id="tab-dashboard" class="tab-content active">
+                    <div class="content-header">
+                        <div>
+                            <h2>📊 Dashboard</h2>
+                            <p>Tổng quan hệ thống</p>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-card-content">
+                                <h3 id="statTotalWorks">0</h3>
+                                <p>Tổng công việc</p>
+                            </div>
+                            <i class="icon">📋</i>
+                        </div>
+                        <div class="stat-card" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                            <div class="stat-card-content">
+                                <h3 id="statCompletedWorks">0</h3>
+                                <p>Hoàn thành</p>
+                            </div>
+                            <i class="icon">✅</i>
+                        </div>
+                        <div class="stat-card" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                            <div class="stat-card-content">
+                                <h3 id="statMediaFiles">0</h3>
+                                <p>Tư liệu</p>
+                            </div>
+                            <i class="icon">📁</i>
+                        </div>
+                        <div class="stat-card" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                            <div class="stat-card-content">
+                                <h3 id="statMembers">0</h3>
+                                <p>Thành viên</p>
+                            </div>
+                            <i class="icon">👥</i>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>🎂 Sinh nhật sắp tới</h3>
+                        </div>
+                        <div id="upcomingBirthdays"></div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>📅 Công việc gần đây</h3>
+                        </div>
+                        <div id="recentWorks"></div>
+                    </div>
+                </div>
+
+                <!-- Work Tab -->
+                <div id="tab-work" class="tab-content">
+                    <div class="content-header">
+                        <div>
+                            <h2>📋 Công việc & Lịch</h2>
+                            <p>Quản lý công việc và lịch trình</p>
+                        </div>
+                        <div class="header-actions">
+                            <button class="btn btn-primary" onclick="openAddWorkModal()" id="btnAddWork" style="display: none;">
+                                <span>+</span> Thêm công việc
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="filter-section">
+                        <select id="filterWorkMonth" onchange="filterWorks()">
+                            <option value="">Tất cả tháng</option>
+                        </select>
+                        <select id="filterWorkYear" onchange="filterWorks()">
+                            <option value="">Tất cả năm</option>
+                        </select>
+                        <select id="filterWorkStatus" onchange="filterWorks()">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="pending">Chờ thực hiện</option>
+                            <option value="inprogress">Đang thực hiện</option>
+                            <option value="completed">Hoàn thành</option>
+                            <option value="cancelled">Hủy bỏ</option>
+                        </select>
+                    </div>
+
+                    <div id="workList"></div>
+                </div>
+
+                <!-- Media Tab -->
+                <div id="tab-media" class="tab-content">
+                    <div class="content-header">
+                        <div>
+                            <h2>📁 Tư liệu truyền thông</h2>
+                            <p>Kho lưu trữ tài liệu</p>
+                        </div>
+                        <div class="header-actions">
+                            <button class="btn btn-primary" onclick="openUploadMediaModal()" id="btnUploadMedia" style="display: none;">
+                                <span>+</span> Thêm tư liệu
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="filter-section">
+                        <select id="filterMediaYear" onchange="filterMedia()">
+                            <option value="">Chọn năm</option>
+                        </select>
+                        <select id="filterMediaMonth" onchange="filterMedia()">
+                            <option value="">Chọn tháng</option>
+                        </select>
+                    </div>
+
+                    <div id="mediaGrid" class="content-grid"></div>
+                </div>
+
+                <!-- Content Tab -->
+                <div id="tab-content" class="tab-content">
+                    <div class="content-header">
+                        <div>
+                            <h2>✍️ Content đăng bài</h2>
+                            <p>Quản lý nội dung đăng bài</p>
+                        </div>
+                        <div class="header-actions">
+                            <button class="btn btn-primary" onclick="openAddContentModal()" id="btnAddContent" style="display: none;">
+                                <span>+</span> Thêm content
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="filter-section">
+                        <select id="filterContentYear" onchange="filterContent()">
+                            <option value="">Chọn năm</option>
+                        </select>
+                        <select id="filterContentMonth" onchange="filterContent()">
+                            <option value="">Chọn tháng</option>
+                        </select>
+                        <select id="filterContentType" onchange="filterContent()">
+                            <option value="">Tất cả loại</option>
+                            <option value="image">Hình ảnh</option>
+                            <option value="design">File thiết kế</option>
+                            <option value="logo">Logo</option>
+                        </select>
+                    </div>
+
+                    <div id="contentGrid" class="content-grid"></div>
+                </div>
+
+                <!-- Members Tab -->
+                <div id="tab-members" class="tab-content">
+                    <div class="content-header">
+                        <div>
+                            <h2>👥 Thành viên BĐH</h2>
+                            <p>Quản lý thành viên Ban Điều Hành</p>
+                        </div>
+                        <div class="header-actions">
+                            <button class="btn btn-primary" onclick="openAddMemberModal()" id="btnAddMember" style="display: none;">
+                                <span>+</span> Thêm thành viên
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="filter-section">
+                        <select id="filterMemberTerm" onchange="filterMembers()">
+                            <option value="">Tất cả nhiệm kỳ</option>
+                        </select>
+                        <input type="text" id="searchMember" placeholder="🔍 Tìm kiếm thành viên..." onkeyup="filterMembers()" style="flex: 1; max-width: 300px;">
+                    </div>
+
+                    <div id="membersContainer">
+                        <!-- Dynamically loaded terms -->
+                    </div>
+                </div>
+
+                <!-- Users Tab -->
+                <div id="tab-users" class="tab-content">
+                    <div class="content-header">
+                        <div>
+                            <h2>👤 Quản lý tài khoản</h2>
+                            <p>Quản lý người dùng và phân quyền</p>
+                        </div>
+                        <div class="header-actions">
+                            <button class="btn btn-primary" onclick="openAddUserModal()" id="btnAddUser" style="display: none;">
+                                <span>+</span> Tạo tài khoản
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Tên đăng nhập</th>
+                                        <th>Email</th>
+                                        <th>Vai trò</th>
+                                        <th>Trạng thái</th>
+                                        <th>Đăng nhập cuối</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody id="usersList"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Audit Log Tab -->
+                <div id="tab-audit" class="tab-content">
+                    <div class="content-header">
+                        <div>
+                            <h2>📜 Lịch sử thao tác</h2>
+                            <p>Theo dõi hoạt động người dùng</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div id="auditLog"></div>
+                    </div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div id="tab-settings" class="tab-content">
+                    <div class="content-header">
+                        <div>
+                            <h2>⚙️ Cài đặt</h2>
+                            <p>Cấu hình hệ thống</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Thông tin tổ chức</h3>
+                        </div>
+                        <p id="orgInfo"></p><a href="admin.html">Chỉnh sửa cấu hình</a>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Thông báo email</h3>
+                        </div>
+                        <p>Bản chạy cục bộ chưa kết nối dịch vụ gửi email.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Sao lưu & Khôi phục</h3>
+                        </div>
+                        <p style="color: var(--text-gray); margin-bottom: 20px;">
+                            Tải bản sao dữ liệu trên trình duyệt này hoặc khôi phục từ tệp JSON đã lưu.
+                        </p>
+                        <div style="display: flex; gap: 15px;">
+                            <button class="btn btn-primary" onclick="backupData()">
+                                <span>💾</span> Sao lưu ngay
+                            </button>
+                            <button class="btn btn-secondary" onclick="restoreData()">
+                                <span>⚡</span> Khôi phục
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Work -->
+    <div class="modal" id="workModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="workModalTitle">Thêm công việc mới</h3>
+                <button class="close-modal" onclick="closeModal('workModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="workForm">
+                    <input type="hidden" id="workId">
+                    <div class="form-grid">
+                        <div class="form-group form-grid-full">
+                            <label>Tên công việc *</label>
+                            <input type="text" id="workName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Loại công việc *</label>
+                            <select id="workType" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Trạng thái *</label>
+                            <select id="workStatus" required>
+                                <option value="pending">Chờ thực hiện</option>
+                                <option value="inprogress">Đang thực hiện</option>
+                                <option value="completed">Hoàn thành</option>
+                                <option value="cancelled">Hủy bỏ</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Ngày giao *</label>
+                            <input type="date" id="workAssignDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Ngày hạn chót *</label>
+                            <input type="date" id="workDeadline" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Giờ</label>
+                            <input type="time" id="workTime">
+                        </div>
+                        <div class="form-group">
+                            <label>Người phụ trách</label>
+                            <select id="workAssignee"></select>
+                        </div>
+                        <div class="form-group form-grid-full">
+                            <label>Mục tiêu</label>
+                            <textarea id="workGoal" rows="2"></textarea>
+                        </div>
+                        <div class="form-group form-grid-full">
+                            <label>Ghi chú</label>
+                            <textarea id="workNote" rows="3"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('workModal')">Hủy</button>
+                <button class="btn btn-primary" type="submit" form="workForm">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Member -->
+    <div class="modal" id="memberModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="memberModalTitle">Thêm thành viên</h3>
+                <button class="close-modal" onclick="closeModal('memberModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="avatar-upload">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%233b82f6'/%3E%3Ctext x='50' y='65' font-size='40' fill='white' text-anchor='middle' font-family='Arial'%3E?%3C/text%3E%3C/svg%3E" alt="Avatar" class="avatar-preview" id="memberAvatarPreview" onclick="document.getElementById('memberAvatarInput').click()">
+                    <input type="file" id="memberAvatarInput" accept="image/*" onchange="handleMemberAvatarUpload(this)" style="display: none;">
+                    <p style="color: var(--text-gray); font-size: 13px;">Nhấp vào ảnh để thay đổi</p>
+                </div>
+                <form id="memberForm">
+                    <input type="hidden" id="memberId">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Họ và tên *</label>
+                            <input type="text" id="memberName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Chức vụ *</label>
+                            <select id="memberPosition" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="memberEmail">
+                        </div>
+                        <div class="form-group">
+                            <label>Số điện thoại</label>
+                            <input type="tel" id="memberPhone">
+                        </div>
+                        <div class="form-group">
+                            <label>Năm sinh</label>
+                            <input type="number" id="memberBirthYear" min="1950" max="2010">
+                        </div>
+                        <div class="form-group">
+                            <label>Giới tính</label>
+                            <select id="memberGender">
+                                <option value="male">Nam</option>
+                                <option value="female">Nữ</option>
+                                <option value="other">Khác</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Ngày sinh</label>
+                            <input type="date" id="memberBirthday">
+                        </div>
+                        <div class="form-group">
+                            <label>Giáo xứ</label>
+                            <input type="text" id="memberParish">
+                        </div>
+                        <div class="form-group">
+                            <label>Nhiệm kỳ *</label>
+                            <select id="memberTerm" required></select>
+                        </div>
+                        <div class="form-group form-grid-full">
+                            <label>Địa chỉ</label>
+                            <input type="text" id="memberAddress">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('memberModal')">Hủy</button>
+                <button class="btn btn-primary" type="submit" form="memberForm">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Supabase (Optional) -->
+    <script src="offline.js"></script>
+    
+    <!-- Load Config -->
+    <script src="config-loader.js"></script>
+    
+    <!-- Load App -->
+    <script src="app.js"></script>
+<div id="messageContainer" role="status" class="message"></div></body>
+</html>

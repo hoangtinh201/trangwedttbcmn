@@ -1,0 +1,160 @@
+{
+  "version": "1.0.0",
+  "lastUpdate": "2024-11-26",
+  "site": {
+    "name": "Ban Truyền Thông",
+    "shortName": "BTT",
+    "description": "Giới Trẻ Bùi Chu Miền Nam",
+    "logo": "assets/logo.svg",
+    "favicon": "assets/logo.svg"
+  },
+  "organization": {
+    "name": "Giới Trẻ Bùi Chu Miền Nam",
+    "fullName": "Ban Truyền Thông – Giới Trẻ Bùi Chu Miền Nam",
+    "email": "",
+    "phone": "",
+    "address": "",
+    "website": ""
+  },
+  "theme": {
+    "primaryNavy": "#1e3a8a",
+    "primaryBlue": "#3b82f6",
+    "accentGold": "#fbbf24",
+    "bgLight": "#f8fafc",
+    "bgWhite": "#ffffff",
+    "textDark": "#1e293b",
+    "textGray": "#64748b",
+    "borderColor": "#e2e8f0",
+    "success": "#10b981",
+    "danger": "#ef4444",
+    "warning": "#f59e0b",
+    "info": "#0ea5e9"
+  },
+  "features": {
+    "dashboard": true,
+    "workManagement": true,
+    "mediaLibrary": true,
+    "contentManagement": true,
+    "memberManagement": true,
+    "userManagement": true,
+    "auditLog": true,
+    "settings": true,
+    "notifications": true,
+    "emailNotifications": true,
+    "forgotPassword": true,
+    "darkMode": true,
+    "search": true
+  },
+  "settings": {
+    "yearRange": {
+      "start": 2024,
+      "count": 7
+    },
+    "terms": [
+      {
+        "id": "2023-2026",
+        "name": "Nhiệm kỳ 2023-2026",
+        "startYear": 2023,
+        "endYear": 2026,
+        "active": false
+      },
+      {
+        "id": "2026-2029",
+        "name": "Nhiệm kỳ 2026-2029",
+        "startYear": 2026,
+        "endYear": 2029,
+        "active": true
+      }
+    ],
+    "workTypes": [
+      "Họp Ban",
+      "Lịch công tác",
+      "Sinh nhật",
+      "Sự kiện",
+      "Deadline",
+      "Content đăng bài",
+      "Livestream",
+      "Chương trình"
+    ],
+    "positions": [
+      "Trưởng Ban",
+      "Phó Ban",
+      "Thư ký",
+      "Thủ quỹ",
+      "Trưởng nhóm Content",
+      "Trưởng nhóm Media",
+      "Trưởng nhóm Livestream",
+      "Thành viên"
+    ],
+    "roles": {
+      "truongBan": {
+        "name": "Trưởng Ban",
+        "permissions": [
+          "all"
+        ]
+      },
+      "phoBan": {
+        "name": "Phó Ban",
+        "permissions": [
+          "manageStaff",
+          "assignWork",
+          "approveContent",
+          "updateProgress",
+          "uploadDocs",
+          "viewCalendar"
+        ]
+      },
+      "user": {
+        "name": "Thành viên",
+        "permissions": [
+          "updateProgress",
+          "viewCalendar",
+          "viewDocs"
+        ]
+      }
+    }
+  },
+  "api": {
+    "useLocalStorage": true,
+    "useSupabase": false,
+    "supabaseUrl": "",
+    "supabaseKey": "",
+    "endpoints": {
+      "users": "data/users.json",
+      "members": "data/members.json",
+      "works": "data/works.json",
+      "content": "data/content.json",
+      "media": "data/media.json"
+    }
+  },
+  "email": {
+    "enabled": false,
+    "notifications": {
+      "workCreated": true,
+      "workUpdated": true,
+      "workCompleted": true,
+      "birthdayReminder": true,
+      "deadlineReminder": true
+    }
+  },
+  "backup": {
+    "autoBackup": true,
+    "backupInterval": 86400000,
+    "maxBackups": 30,
+    "lastBackup": null
+  },
+  "security": {
+    "preventRightClick": true,
+    "preventDevTools": true,
+    "preventDownload": true,
+    "sessionTimeout": 3600000,
+    "maxLoginAttempts": 5,
+    "passwordMinLength": 6
+  },
+  "ui": {
+    "itemsPerPage": 20,
+    "dateFormat": "DD/MM/YYYY",
+    "timeFormat": "HH:mm",
+    "language": "vi"
+  }
+}
